@@ -17,9 +17,6 @@ const int stopPin = A0;
 long previousMillis = 0;
 long interval = 500;
 
-long previousMillisLCD = 0;
-long intervalLCD = 2000;
-
 int buzz8amHH = 10;
 int buzz8amMM = 0;
 int buzz8amSS = 0;
@@ -48,19 +45,7 @@ String dayOfWeekStr(int day) {
 
 void setup() {
   Serial.begin(9600);
-
-  if (!rtc.begin()) {
-    Serial.println("Couldn't find RTC");
-    while (1)
-      ;
-  }
-
-  if (rtc.lostPower()) {
-    Serial.println("RTC lost power, lets set the time!");
-  }
-
-  rtc.adjust(DateTime(2024, 4, 18, 19, 59, 30)); 
-  delay(1000);
+  rtc.adjust(DateTime(2024, 11, 7, 19, 59, 30)); 
 
   pinMode(push1pin, INPUT_PULLUP);
   pinMode(push2pin, INPUT_PULLUP);
@@ -162,7 +147,7 @@ void displayReminder(String reminder) {
 
 void at8am() {
   DateTime now = rtc.now();
-  if (now.hour() == buzz8amHH && now.minute() == buzz8amMM && now.second() == buzz8amSS && Serial.read()) {
+  if (now.hour() == buzz8amHH && now.minute() == buzz8amMM && now.second() == buzz8amSS && Serial.read()=='name') {
     Serial.println("8 AM reached. Turning on the buzzer");
     startBuzz();
   }
@@ -170,14 +155,14 @@ void at8am() {
 
 void at2pm() {
   DateTime now = rtc.now();
-  if (now.hour() == buzz2pmHH && now.minute() == buzz2pmMM && now.second() == buzz2pmSS && Serial.read()) {
+  if (now.hour() == buzz2pmHH && now.minute() == buzz2pmMM && now.second() == buzz2pmSS && Serial.read()=='name') {
     startBuzz();
   }
 }
 
 void at8pm() {
   DateTime now = rtc.now();
-  if (now.hour() == buzz8pmHH && now.minute() == buzz8pmMM && now.second() == buzz8pmSS && Serial.read()) {
+  if (now.hour() == buzz8pmHH && now.minute() == buzz8pmMM && now.second() == buzz8pmSS && Serial.read()=='narayana') {
     startBuzz();
   }
 }
